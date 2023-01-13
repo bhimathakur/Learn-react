@@ -2,14 +2,14 @@ import { Link } from "react-router-dom";
 
 const Pet = (props) => {
   const { name, animal, breed, images, location, id } = props;
-  let hero = "http://pets-images.dev-apis.com/pets/none.jpg";
+  let image = "http://pets-images.dev-apis.com/pets/none.jpg";
   if (images.length) {
-    hero = images[0];
+    image = images[0];
   }
   return (
     <Link to={`/details/${id}`} className="pet">
       <div className="image-container">
-        <img src={hero} alt={name} />
+        <img src={image} alt={name} />
       </div>
       <div className="info">
         <h1>{name}</h1>
