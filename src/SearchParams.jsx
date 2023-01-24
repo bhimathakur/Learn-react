@@ -1,27 +1,27 @@
-import { useContext, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import {useState} from "react";
+
+import { useSelector, useDispatch } from "react-redux"; // add dispatch
+import { all } from "./searchParamsSlice";
 
 import Pet from "./Pet";
 import useBreedList from "./useBreedList";
 import Results from "./Results";
-import fetchSearch from "./fetchSearch";
 import fetchBreedList from "./fetchBreedList";
-import AdoptedPetContext from "./AdoptedPetContext";
+import { useSearchQuery } from "./petApiService";
+
 
 const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
 
 const SearchParams = () => {
-  const [requestParams, setRequestParams] = useState({
-    location: "",
-    animal: "",
-    breed: "",
-  });
-  const [adoptedPet] = useContext(AdoptedPetContext);
   const [animal, setAnimal] = useState("");
   const [breeds] = useBreedList(animal);
+  const dispatch = useDispatch();
+//  console.log(state);
+  const adoptedPet = useSelector((state) => state.adoptedPet);
+  const searchParams = useSelector((state) => state.searchParams);
 
-  const results = useQuery(["search", requestParams], fetchSearch);
-  const pets = results?.data?.pets ?? [];
+  let { data: pets } = useSearchQuery(searchParams);
+  pets = pets ?? [];
 
   return (
     <div className="search-params">
@@ -29,12 +29,16 @@ const SearchParams = () => {
         onSubmit={(e) => {
           e.preventDefault();
           const formData = new FormData(e.target);
+          console.log(e.target);
           const obj = {
             animal: formData.get("animal") ?? "",
             breed: formData.get("breed") ?? "",
             location: formData.get("location") ?? "",
           };
-          setRequestParams(obj);
+          console.log(formData.get("location"));
+          
+          dispatch(all(obj));
+
         }}
       >
         {adoptedPet ? (
@@ -44,21 +48,25 @@ const SearchParams = () => {
         ) : null}
         <label htmlFor="location">
           Location
-          <input id="location" placeholder="Location"></input>
+          <input id="location" name="location" placeholder="Location"></input>
         </label>
         <label htmlFor="animal">
           Animals
           <select
-            name="animal"
             id="animal"
-            value={animal}
+            name="animal"
             onChange={(e) => {
               setAnimal(e.target.value);
             }}
+            onBlur={(e) => {
+              setAnimal(e.target.value);
+            }}
           >
-            <option></option>
+            <option />
             {ANIMALS.map((animal) => (
-              <option key={animal}>{animal}</option>
+              <option key={animal} value={animal}>
+                {animal}
+              </option>
             ))}
           </select>
         </label>
