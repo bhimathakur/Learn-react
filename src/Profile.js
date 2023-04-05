@@ -19,7 +19,7 @@ class Profile extends React.Component {
     }
 
     componentDidUpdate(){
-        console.log("did update will call on every render");
+        console.log("did update will call on every component render");
     }
 
      updateState =() => {
@@ -31,7 +31,7 @@ class Profile extends React.Component {
         return (
             <React.Fragment>
         <h1>Hello this profile class based component {this.state.count}</h1>
-        <button onClick={this.updateState}>Update count</button>
+        <button onClick={this.updateState} className="p-2 m-5 bg-pink-500 rounded-lg">Update count</button>
         </React.Fragment>
         )
         
