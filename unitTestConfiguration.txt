@@ -1,0 +1,43 @@
+Diffrent type testing:
+ - Manual testsing
+ - Automated tesing =code testing code.
+		Selinum tetsing
+		
+		
+ - E2E TEsting=> cover entire user journey
+---head less browser....kind a actual browser but it  
+  - Unit tesing : core job of developer 
+  - Integration testing: 
+  - regrasion testing
+  - Smoke testing
+  - 
+  
+  setup
+  npm install --save-dev @testing-library/react
+  
+  npm install -D jest
+  
+  configure jest
+  npx jest --init
+  
+run test: npm run test  
+  npm i -D jest-environment-jsdom (if we got the error for env.)
+  
+  create __tests__ folder and put an test file inside the folder.
+  configure jest with babel:
+  
+  npm install --save-dev babel-jest @babel/core @babel/preset-env
+  
+  install:
+   @babel/preset-react
+  
+  babelrc:
+  {
+    "presets": [
+        ["@babel/preset-env", {"targets": {"node": "current"}}],
+        ["@babel/preset-react", {"runtime": "automatic"}]
+    ]
+}
+JS dom...run unit test
+
+json and javascript object

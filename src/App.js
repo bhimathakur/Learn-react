@@ -10,14 +10,26 @@ import Footer from "./Footer";
 import Body from "./Body";
 import Error from "./Error";
 import Contact from "./Contact";
-import RestaurantMenu from "./RestaurantMenu"
+import RestaurantMenu from "./RestaurantMenu";
+import SmartMart from "./SmartMart";
+import userContext from "./utils/userContext";
+import { Provider } from "react-redux";
+import store  from "./utils/store";
 
 const AppLayout = () => {
+    const loggedInUserDetail = {user:{
+        name: 'Bhima Thakur new',
+        email: 'newemail@gamil.com'
+    }}
     return (
         <React.Fragment>
+            <Provider store={store}>
+            <userContext.Provider value={loggedInUserDetail}>
             <Header />
             <Outlet />
             <Footer />
+            </userContext.Provider>
+            </Provider>
         </React.Fragment>
     );
 }
@@ -46,6 +58,10 @@ const appRouter = createBrowserRouter([
             {
                 path: '/restaurant/:id',
                 element: <RestaurantMenu />
+            },
+            {
+                path: '/smartmart',
+                element: <SmartMart />
             }
         ]
     },
